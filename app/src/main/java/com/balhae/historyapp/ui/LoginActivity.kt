@@ -2,6 +2,7 @@ package com.balhae.historyapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -81,19 +82,29 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val body = response.body()
                     if (body != null) {
+                        Log.d("LoginActivity", "서버 응답 수신 - accessToken: ${body.accessToken.take(20)}...")
+
                         // 백엔드에서 받은 JWT 토큰 저장
                         TokenManager.saveTokens(
                             this@LoginActivity,
                             body.accessToken,
                             body.refreshToken
                         )
+
+                        // 저장 확인
+                        val savedToken = TokenManager.getAccessToken(this@LoginActivity)
+                        Log.d("LoginActivity", "저장된 토큰 확인 - isLoggedIn: ${TokenManager.isLoggedIn(this@LoginActivity)}")
+                        Log.d("LoginActivity", "저장된 토큰: ${savedToken?.take(20) ?: "null"}...")
+
                         Toast.makeText(this@LoginActivity, "로그인 성공!", Toast.LENGTH_SHORT).show()
                         startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
                         finish()
                     } else {
+                        Log.e("LoginActivity", "응답 body가 null")
                         Toast.makeText(this@LoginActivity, "응답이 비어있음", Toast.LENGTH_SHORT).show()
                     }
                 } else {
+                    Log.e("LoginActivity", "로그인 실패 - 상태 코드: ${response.code()}")
                     Toast.makeText(
                         this@LoginActivity,
                         "로그인 실패: ${response.code()}",
@@ -105,6 +116,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onFailure(call: Call<KakaoLoginResponse>, t: Throwable) {
                 isLoading = false
                 btnKakaoLogin.isEnabled = true
+                Log.e("LoginActivity", "로그인 네트워크 오류", t)
                 Toast.makeText(
                     this@LoginActivity,
                     "로그인 오류: ${t.message}",

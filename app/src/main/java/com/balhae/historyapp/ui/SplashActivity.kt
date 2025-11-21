@@ -14,14 +14,24 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
+        // 2.5초 후 토큰 체크 후 화면 전환
         Handler(Looper.getMainLooper()).postDelayed({
-            val next = if (TokenManager.isLoggedIn(this)) {
-                Intent(this, HomeActivity::class.java)
-            } else {
-                Intent(this, LoginActivity::class.java)
-            }
-            startActivity(next)
-            finish()
-        }, 2000L)
+            navigateToNextScreen()
+        }, 2500L)
+    }
+
+    private fun navigateToNextScreen() {
+        val isLoggedIn = TokenManager.isLoggedIn(this)
+
+        val nextActivityClass = if (isLoggedIn) {
+            HomeActivity::class.java
+        } else {
+            LoginActivity::class.java
+        }
+
+        startActivity(Intent(this, nextActivityClass))
+        finish()
+        // 부드러운 전환 애니메이션
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
     }
 }

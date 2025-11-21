@@ -1,166 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_home_gradient">
+    android:background="@drawable/bg_korea_map">
 
-    <!-- 헤더 -->
-    <LinearLayout
-        android:id="@+id/layoutHeader"
-        android:layout_width="0dp"
+    <!-- 한반도 지도 배경 텍스트 (오른쪽 하단, 매우 투명) -->
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="4dp"
-        android:orientation="horizontal"
-        android:padding="12dp"
+        android:text="🗺️"
+        android:textSize="180sp"
+        android:alpha="0.05"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:id="@+id/tvMemberName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="사용자"
-                android:textColor="#B71C1C"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvHomeTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="문화재 탐험"
-                android:textColor="#666666"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvPoint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="12dp"
-            android:background="@drawable/bg_point_box"
-            android:padding="8dp"
-            android:text="0P"
-            android:textColor="#E65100"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/btnProfile"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/bg_profile_circle"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ic_profile_placeholder" />
-    </LinearLayout>
-
-    <!-- 안내 텍스트 -->
-    <LinearLayout
-        android:id="@+id/layoutGuide"
+    <!-- 헤더 배경 (한국 전통색) -->
+    <View
+        android:id="@+id/headerBackground"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="140dp"
+        android:background="#D4A574"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutHeader">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/tvHomeGuideTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="문화재를 발견하세요"
-            android:textColor="@android:color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvHomeGuideSub"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카메라로 문화재를 인식해보세요"
-            android:textColor="#666666"
-            android:textSize="14sp" />
-    </LinearLayout>
-
-    <!-- 중앙 카메라 버튼 -->
-    <Button
-        android:id="@+id/btnCamera"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:background="@drawable/bg_camera_button"
-        android:text="📷"
+    <!-- 헤더 장식 요소 - 좌측 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🏯"
         android:textSize="40sp"
-        app:layout_constraintBottom_toTopOf="@+id/layoutTip"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutGuide"
-        app:layout_constraintVertical_bias="0.5" />
+        android:alpha="0.3"
+        app:layout_constraintTop_toTopOf="@id/headerBackground"
+        app:layout_constraintStart_toStartOf="@id/headerBackground"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp" />
 
-    <!-- 하단 팁 -->
-    <LinearLayout
-        android:id="@+id/layoutTip"
+    <!-- 헤더 장식 요소 - 우측 -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎎"
+        android:textSize="40sp"
+        android:alpha="0.3"
+        app:layout_constraintTop_toTopOf="@id/headerBackground"
+        app:layout_constraintEnd_toStartOf="@id/btnHeaderLogout"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp" />
+
+    <!-- 헤더 로그아웃 버튼 -->
+    <Button
+        android:id="@+id/btnHeaderLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:textSize="12sp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/text_secondary"
+        app:layout_constraintTop_toTopOf="@id/headerBackground"
+        app:layout_constraintEnd_toEndOf="@id/headerBackground"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="12dp" />
+
+    <!-- 헤더 프로필 카드 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="@drawable/bg_tip_box"
-        android:orientation="horizontal"
-        android:padding="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/headerBackground"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toTopOf="@id/layoutContent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:spacing="16dp">
+
+            <!-- 프로필 이미지 (클릭 가능) -->
+            <ImageView
+                android:id="@+id/ivProfileHeader"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/ic_profile_placeholder"
+                android:scaleType="centerCrop"
+                android:background="@drawable/bg_profile_circle"
+                android:contentDescription="프로필"
+                android:foreground="?attr/selectableItemBackground" />
+
+            <!-- 사용자 정보 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="16dp">
+
+                <TextView
+                    android:id="@+id/tvMemberName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사용자"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/tvHomeTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="문화재 탐험중"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+            <!-- 포인트 뱃지 (세로 배치) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:background="@drawable/bg_point_box"
+                android:padding="12dp">
+
+                <TextView
+                    android:id="@+id/tvPoint"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0P"
+                    android:textColor="@color/primary_orange"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="포인트"
+                    android:textColor="@color/primary_orange"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="6dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/primary_orange"
+                    android:layout_marginBottom="6dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="매일 00시"
+                    android:textColor="@color/primary_orange"
+                    android:textSize="10sp"
+                    android:layout_marginBottom="2dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2P 충전💰"
+                    android:textColor="@color/primary_orange"
+                    android:textSize="9sp"
+                    android:gravity="center" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <LinearLayout
+        android:id="@+id/layoutContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cardHeader"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 안내 타이틀 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="문화재를 발견하세요"
+            android:textColor="@color/text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:text="💡"
-            android:textSize="24sp" />
+            android:text="카메라로 문화재를 인식하면 포인트를 획득할 수 있습니다"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
 
-        <LinearLayout
+        <!-- 카메라 버튼 (크고 눈에 띄는) -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            app:cardCornerRadius="60dp"
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/primary_red"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnCamera"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent"
+                    android:text="📷"
+                    android:textSize="50sp"
+                    android:gravity="center" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 팁 박스 -->
+        <androidx.cardview.widget.CardView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="#FFF8E7"
+            android:layout_gravity="center_horizontal">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="탐험 팁"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="문화재를 촬영하면 포인트를 획득할 수 있어요!"
-                android:textColor="#666666"
-                android:textSize="12sp" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="💡"
+                    android:textSize="28sp"
+                    android:layout_marginEnd="12dp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="탐험 팁"
+                        android:textColor="@color/text_primary"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="맑은 날씨에 문화재를 촬영하면\n더 정확한 인식이 가능합니다"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="12sp"
+                        android:lineSpacingMultiplier="1.2" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
-    <!-- 로그아웃 버튼 -->
-    <Button
-        android:id="@+id/btnHomeBackLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:text="로그아웃"
-        android:textColor="@android:color/white"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutHeader" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -59,6 +59,9 @@ dependencies {
     // Kakao SDK
     implementation("com.kakao.sdk:v2-user:2.20.6")
 
+    // Picasso (이미지 로딩)
+    implementation("com.squareup.picasso:picasso:2.8")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

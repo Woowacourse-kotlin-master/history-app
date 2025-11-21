@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- 기본 색상 -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- 브랜드 색상 -->
+    <color name="primary_red">#B71C1C</color>
+    <color name="primary_red_light">#D32F2F</color>
+    <color name="primary_orange">#E65100</color>
+
+    <!-- 중성 색상 -->
+    <color name="text_primary">#333333</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_tertiary">#999999</color>
+    <color name="background_light">#F5F5F5</color>
+
+    <!-- 배경 색상 -->
+    <color name="splash_background">#FAFAFA</color>
+    <color name="home_background">#F8F4F0</color>
+    <color name="profile_background">#F5E6E0</color>
+
+    <!-- App Icon 색상 (한국 전통색) -->
+    <color name="ic_launcher_background">#8B6F47</color>
 </resources>

@@ -1,8 +1,22 @@
 package com.balhae.historyapp.network.models
 
+import com.google.gson.annotations.SerializedName
+
 data class MemberResponse(
-    val id: Long?,
-    val name: String?,
-    val profileImageUrl: String?
-    // TODO: Swagger에 추가 필드 있으면 여기에 확장
+    @SerializedName("userName")
+    val userName: String,
+
+    @SerializedName("profile")
+    val profile: String,
+
+    @SerializedName("heritageDtos")
+    val heritageDtos: List<HeritageDto> = emptyList()
+)
+
+data class HeritageDto(
+    @SerializedName("heritageImage")
+    val heritageImage: String,
+
+    @SerializedName("heritageText")
+    val heritageText: String
 )

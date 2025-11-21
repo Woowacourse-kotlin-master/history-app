@@ -4,7 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.balhae.historyapp.R
 import com.balhae.historyapp.network.RetrofitClient
 import com.balhae.historyapp.network.models.HeritageRecognizeResponse
-import com.balhae.historyapp.util.HeritageRepository
+import com.balhae.historyapp.util.LoadingDialog
 import com.balhae.historyapp.util.TokenManager
 import com.balhae.historyapp.util.MultipartUtils
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,9 +24,10 @@ class HomeActivity : AppCompatActivity() {
 
     private lateinit var tvPoint: TextView
     private lateinit var tvMemberName: TextView
-    private lateinit var btnProfile: ImageButton
+    private lateinit var ivProfileHeader: ImageView
     private lateinit var btnCamera: Button
-    private lateinit var btnBackToLogin: Button
+    private lateinit var btnHeaderLogout: Button
+    private var loadingDialog: LoadingDialog? = null
 
     private val galleryLauncher =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -40,28 +42,38 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        initializeViews()
+        setupListeners()
+        loadMemberInfoAndPoint()
+    }
+
+    private fun initializeViews() {
         tvPoint = findViewById(R.id.tvPoint)
         tvMemberName = findViewById(R.id.tvMemberName)
-        btnProfile = findViewById(R.id.btnProfile)
+        ivProfileHeader = findViewById(R.id.ivProfileHeader)
         btnCamera = findViewById(R.id.btnCamera)
-        btnBackToLogin = findViewById(R.id.btnHomeBackLogin)
+        btnHeaderLogout = findViewById(R.id.btnHeaderLogout)
+        loadingDialog = LoadingDialog(this)
+    }
 
-        btnProfile.setOnClickListener {
-            startActivity(Intent(this, ProfileActivity::class.java))
+    private fun setupListeners() {
+        // 카메라 버튼
+        btnCamera.setOnClickListener {
+            galleryLauncher.launch("image/*")
         }
 
-        btnBackToLogin.setOnClickListener {
+        // 프로필 이미지 클릭 → MyPageActivity로 이동
+        ivProfileHeader.setOnClickListener {
+            startActivity(Intent(this, MyPageActivity::class.java))
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+        }
+
+        // 헤더 로그아웃 버튼
+        btnHeaderLogout.setOnClickListener {
             TokenManager.clear(this)
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
-
-        btnCamera.setOnClickListener {
-            // 📷 갤러리에서 이미지 선택
-            galleryLauncher.launch("image/*")
-        }
-
-        loadMemberInfoAndPoint()
     }
 
     private fun loadMemberInfoAndPoint() {
@@ -75,7 +87,16 @@ class HomeActivity : AppCompatActivity() {
             ) {
                 if (response.isSuccessful) {
                     val body = response.body()
-                    tvMemberName.text = body?.name ?: "사용자"
+                    tvMemberName.text = body?.userName ?: "사용자"
+
+                    // 프로필 이미지 로드
+                    if (!body?.profile.isNullOrEmpty()) {
+                        Picasso.get()
+                            .load(body?.profile)
+                            .placeholder(R.drawable.ic_profile_placeholder)
+                            .error(R.drawable.ic_profile_placeholder)
+                            .into(ivProfileHeader)
+                    }
                 }
             }
 
@@ -111,11 +132,14 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun uploadHeritageImage(uri: Uri) {
-        val imagePart = MultipartUtils.createImagePartFromUri(this, uri, "image")
+        val imagePart = MultipartUtils.createImagePartFromUri(this, uri, "heritageImage")
         if (imagePart == null) {
             Toast.makeText(this, "이미지 변환 실패", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // 로딩 다이얼로그 표시
+        loadingDialog?.showDialog("문화재 이미지 분석 중…\n잠시만 기다려주세요")
 
         val api = RetrofitClient.getApiService(this)
         api.recognizeHeritage(imagePart).enqueue(object : Callback<HeritageRecognizeResponse> {
@@ -123,20 +147,25 @@ class HomeActivity : AppCompatActivity() {
                 call: Call<HeritageRecognizeResponse>,
                 response: Response<HeritageRecognizeResponse>
             ) {
+                // 로딩 다이얼로그 닫기
+                loadingDialog?.dismiss()
+
                 if (response.isSuccessful) {
                     val body = response.body()
-                    HeritageRepository.lastRecognized = body?.items ?: emptyList()
                     Toast.makeText(this@HomeActivity, "문화재 인식 완료!", Toast.LENGTH_SHORT).show()
 
-                    // ✅ 인식 완료 후 바로 마이페이지로 유도
-                    val intent = Intent(this@HomeActivity, ProfileActivity::class.java)
+                    // ✅ 인식 완료 후 마이페이지로 이동
+                    val intent = Intent(this@HomeActivity, MyPageActivity::class.java)
                     startActivity(intent)
+                    overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                 } else {
-                    Toast.makeText(this@HomeActivity, "인식 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@HomeActivity, "토큰이 부족합니다.}", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<HeritageRecognizeResponse>, t: Throwable) {
+                // 로딩 다이얼로그 닫기
+                loadingDialog?.dismiss()
                 Toast.makeText(this@HomeActivity, "인식 오류: ${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

@@ -1,14 +1,15 @@
 package com.balhae.historyapp.network.models
 
-// 서버가 내려주는 JWT 토큰 응답 (예시)
-data class KakaoLoginResponse(
-    val accessToken: String,
-    val refreshToken: String?,
-    val member: MemberInfo?
-)
+import com.google.gson.annotations.SerializedName
 
-data class MemberInfo(
-    val id: Long?,
-    val name: String?,
-    val profileImageUrl: String?
+// 서버가 내려주는 JWT 토큰 응답
+data class KakaoLoginResponse(
+    @SerializedName("accessToken")
+    val accessToken: String,
+
+    @SerializedName("refreshToken")
+    val refreshToken: String,
+
+    @SerializedName("nameFlag")
+    val nameFlag: Boolean = false
 )

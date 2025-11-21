@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">HistoryApp</string>
+    <string name="app_name">역사 길잡이</string>
+    <string name="app_description">문화재 탐험 및 기록 앱</string>
 </resources>

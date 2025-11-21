@@ -1,8 +1,76 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.Historyapp" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Light 테마 + ActionBar 제거 -->
+        <!-- 기본 색상 -->
+        <item name="colorPrimary">@color/primary_red</item>
+        <item name="colorPrimaryDark">@color/ic_launcher_background</item>
+        <item name="colorAccent">@color/primary_orange</item>
+
+        <!-- 보조 색상 -->
+        <item name="colorSecondary">@color/primary_orange</item>
+
+        <!-- 텍스트 색상 -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+
+        <!-- ActionBar 제거 -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <!-- 상태바 스타일 -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/ic_launcher_background</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
     <style name="Theme.Historyapp" parent="Base.Theme.Historyapp" />
+
+    <!-- 버튼 스타일 -->
+    <style name="ButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+    </style>
+
+    <!-- CardView 스타일 -->
+    <style name="CardViewStyle">
+        <item name="android:elevation">4dp</item>
+        <item name="cardCornerRadius">16dp</item>
+    </style>
+
+    <!-- 텍스트 스타일 기본 -->
+    <style name="TextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- 텍스트 스타일 - 제목 -->
+    <style name="TextStyle.Title" parent="TextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <!-- 텍스트 스타일 - 본문 -->
+    <style name="TextStyle.Body" parent="TextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+    </style>
+
+    <!-- 텍스트 스타일 - 캡션 -->
+    <style name="TextStyle.Caption" parent="TextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_tertiary</item>
+    </style>
+
+    <!-- 투명한 다이얼로그 스타일 -->
+    <style name="TransparentDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
 </resources>

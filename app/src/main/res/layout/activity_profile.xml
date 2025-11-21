@@ -4,54 +4,62 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_profile_gradient">
+    android:background="@color/profile_background">
 
     <!-- 헤더 -->
-    <LinearLayout
-        android:id="@+id/layoutProfileHeader"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardProfileHeader"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_profile_header"
-        android:padding="12dp"
-        android:orientation="horizontal"
-        android:elevation="4dp"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@color/primary_red"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
-            android:id="@+id/btnProfileBackHome"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:src="@android:drawable/ic_media_previous"
-            android:background="@android:color/transparent"
-            android:tint="@android:color/white"/>
-
-        <TextView
-            android:id="@+id/tvProfileHeaderTitle"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="마이페이지"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:textColor="@android:color/white"/>
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical">
 
-        <View
-            android:layout_width="32dp"
-            android:layout_height="32dp"/>
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/btnProfileBackHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@android:drawable/ic_media_previous"
+                android:background="@android:color/transparent"
+                android:tint="@android:color/white" />
 
-    <!-- 프로필 카드 -->
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="마이페이지"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@android:color/white" />
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="32dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- 프로필 정보 카드 -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardProfile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="12dp"
         app:cardElevation="4dp"
-        app:cardCornerRadius="24dp"
-        app:layout_constraintTop_toBottomOf="@id/layoutProfileHeader"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/cardProfileHeader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -59,62 +67,86 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="20dp"
             android:gravity="center_horizontal">
 
+            <!-- 프로필 이미지 -->
             <ImageView
                 android:id="@+id/ivProfileImage"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:src="@drawable/ic_profile_placeholder"
+                android:scaleType="centerCrop"
                 android:background="@drawable/bg_profile_circle"
-                android:padding="8dp"/>
+                android:layout_marginBottom="12dp" />
 
+            <!-- 사용자 이름 -->
             <TextView
                 android:id="@+id/tvProfileName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="김문화"
+                android:text="사용자"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginTop="8dp"/>
+                android:textColor="@color/primary_red"
+                android:layout_marginBottom="12dp" />
 
+            <!-- 포인트 -->
             <TextView
                 android:id="@+id/tvProfilePoint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0P"
-                android:layout_marginTop="8dp"
-                android:padding="8dp"
+                android:padding="12dp"
                 android:background="@drawable/bg_point_box"
-                android:textColor="#E65100"
-                android:textStyle="bold"/>
-
+                android:textColor="@color/primary_orange"
+                android:textSize="16sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- 나의 문화재 탐험 타이틀 -->
-    <TextView
-        android:id="@+id/tvProfileSectionTitle"
-        android:layout_width="wrap_content"
+    <!-- 나의 문화재 탐험 섹션 -->
+    <LinearLayout
+        android:id="@+id/layoutHeritagHeader"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="나의 문화재 탐험"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/cardProfile"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvProfileSectionTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="나의 탐험 기록"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tvHeritageCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0개"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:background="@drawable/bg_point_box"
+            android:padding="6dp" />
+    </LinearLayout>
 
     <!-- 그리드 리스트 -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHeritage"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tvProfileSectionTitle"
+        android:layout_margin="12dp"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeritagHeader"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

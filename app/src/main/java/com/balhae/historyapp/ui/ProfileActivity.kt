@@ -2,6 +2,7 @@ package com.balhae.historyapp.ui
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +13,7 @@ import com.balhae.historyapp.network.RetrofitClient
 import com.balhae.historyapp.network.models.MemberResponse
 import com.balhae.historyapp.network.models.PointResponse
 import com.balhae.historyapp.ui.adapters.HeritageGridAdapter
-import com.balhae.historyapp.util.HeritageRepository
+import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,8 +21,10 @@ import retrofit2.Response
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var btnBackHome: ImageButton
+    private lateinit var ivProfileImage: ImageView
     private lateinit var tvName: TextView
     private lateinit var tvPointProfile: TextView
+    private lateinit var tvHeritageCount: TextView
     private lateinit var rvHeritage: RecyclerView
     private lateinit var adapter: HeritageGridAdapter
 
@@ -29,21 +32,30 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        btnBackHome = findViewById(R.id.btnProfileBackHome)
-        tvName = findViewById(R.id.tvProfileName)
-        tvPointProfile = findViewById(R.id.tvProfilePoint)
-        rvHeritage = findViewById(R.id.rvHeritage)
-
-        btnBackHome.setOnClickListener {
-            finish()
-        }
-
-        adapter = HeritageGridAdapter(HeritageRepository.lastRecognized)
-        rvHeritage.layoutManager = GridLayoutManager(this, 2)
-        rvHeritage.adapter = adapter
-
+        initializeViews()
+        setupListeners()
         loadMemberInfo()
         loadPoint()
+    }
+
+    private fun initializeViews() {
+        btnBackHome = findViewById(R.id.btnProfileBackHome)
+        ivProfileImage = findViewById(R.id.ivProfileImage)
+        tvName = findViewById(R.id.tvProfileName)
+        tvPointProfile = findViewById(R.id.tvProfilePoint)
+        tvHeritageCount = findViewById(R.id.tvHeritageCount)
+        rvHeritage = findViewById(R.id.rvHeritage)
+
+        adapter = HeritageGridAdapter(emptyList())
+        rvHeritage.layoutManager = GridLayoutManager(this, 2)
+        rvHeritage.adapter = adapter
+    }
+
+    private fun setupListeners() {
+        btnBackHome.setOnClickListener {
+            finish()
+            overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+        }
     }
 
     private fun loadMemberInfo() {
@@ -52,7 +64,22 @@ class ProfileActivity : AppCompatActivity() {
             override fun onResponse(call: Call<MemberResponse>, response: Response<MemberResponse>) {
                 if (response.isSuccessful) {
                     val body = response.body()
-                    tvName.text = body?.name ?: "사용자"
+                    tvName.text = body?.userName ?: "사용자"
+
+                    // 프로필 이미지 로드
+                    if (!body?.profile.isNullOrEmpty()) {
+                        Picasso.get()
+                            .load(body?.profile)
+                            .placeholder(R.drawable.ic_profile_placeholder)
+                            .error(R.drawable.ic_profile_placeholder)
+                            .into(ivProfileImage)
+                    }
+
+                    // Heritage 목록 업데이트
+                    if (body?.heritageDtos != null) {
+                        adapter.updateData(body.heritageDtos)
+                        tvHeritageCount.text = "${body.heritageDtos.size}개"
+                    }
                 } else {
                     Toast.makeText(this@ProfileActivity, "회원 정보 조회 실패", Toast.LENGTH_SHORT).show()
                 }

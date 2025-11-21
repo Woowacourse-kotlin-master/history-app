@@ -3,103 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_login_gradient">
+    android:background="@color/splash_background">
 
-    <!-- 상단 영역 -->
-    <TextView
-        android:id="@+id/tvLoginIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:text="🏛️"
-        android:textColor="@android:color/white"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvLoginTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="문화재 탐험"
-        android:textColor="@android:color/white"
-        android:textSize="26sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginIcon" />
-
-    <TextView
-        android:id="@+id/tvLoginSub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="우리의 역사를 발견하세요"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginTitle" />
-
-    <!-- 카드 영역 -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardLogin"
+    <!-- 상단 그래디언트 배경 (한국 전통색) -->
+    <View
+        android:id="@+id/headerGradient"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="24dp"
-        app:cardCornerRadius="24dp"
-        app:cardElevation="6dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="280dp"
+        android:background="@color/ic_launcher_background"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLoginSub">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="환영합니다"
-                android:textColor="@android:color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="간편하게 시작하세요"
-                android:textColor="#666666"
-                android:textSize="14sp" />
-
-            <Button
-                android:id="@+id/btnKakaoLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_kakao_button"
-                android:text="카카오로 시작하기"
-                android:textColor="@android:color/black"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:gravity="center"
-                android:text="카카오 계정으로 간편하게 시작하세요"
-                android:textColor="#999999"
-                android:textSize="12sp" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
+    <!-- 뒤로가기 버튼 -->
     <Button
         android:id="@+id/btnBackSplash"
         android:layout_width="wrap_content"
@@ -109,7 +25,146 @@
         android:background="@android:color/transparent"
         android:text="← 뒤로"
         android:textColor="@android:color/white"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- 상단 콘텐츠 (아이콘 + 제목) -->
+    <LinearLayout
+        android:id="@+id/layoutHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="32dp"
+        app:layout_constraintTop_toBottomOf="@id/btnBackSplash"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- 아이콘 배경 원 -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="6dp"
+            app:cardBackgroundColor="@android:color/white"
+            android:layout_marginBottom="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🏛️"
+                    android:textSize="45sp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- 앱 이름 -->
+        <TextView
+            android:id="@+id/tvLoginTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp" />
+
+        <!-- 부제 -->
+        <TextView
+            android:id="@+id/tvLoginSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="우리의 역사를 발견하세요"
+            android:textColor="#E8D4C0"
+            android:textSize="14sp"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- 로그인 카드 -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="6dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="28dp">
+
+            <!-- 카드 제목 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="시작하기"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <!-- 카드 설명 -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="카카오 계정으로 간편하게 로그인하세요"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp"
+                android:layout_marginBottom="24dp" />
+
+            <!-- 카카오 로그인 버튼 -->
+            <Button
+                android:id="@+id/btnKakaoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_kakao_button"
+                android:text="카카오로 시작하기"
+                android:textColor="@android:color/black"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <!-- 혜택 설명 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:background="@color/home_background">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="✨ "
+                    android:textSize="14sp"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="로그인하면 문화재 탐험을 시작할 수 있습니다"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp"
+                    android:lineSpacingMultiplier="1.3" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

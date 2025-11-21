@@ -10,16 +10,26 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-
     private const val BASE_URL = "https://flow.madras.p-e.kr/"
 
     @Volatile
     private var retrofit: Retrofit? = null
 
+    @Volatile
+    private var apiService: ApiService? = null
+
     fun getApiService(context: Context): ApiService {
-        return (retrofit ?: synchronized(this) {
-            retrofit ?: buildRetrofit(context).also { retrofit = it }
-        }.create(ApiService::class.java)) as ApiService
+        if (apiService == null) {
+            synchronized(this) {
+                if (apiService == null) {
+                    if (retrofit == null) {
+                        retrofit = buildRetrofit(context)
+                    }
+                    apiService = retrofit!!.create(ApiService::class.java)
+                }
+            }
+        }
+        return apiService!!
     }
 
     private fun buildRetrofit(context: Context): Retrofit {
