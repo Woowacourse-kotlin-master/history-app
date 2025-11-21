@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 기본 배경 색상 -->
+    <item android:drawable="@color/home_background" />
+
+    <!-- 미묘한 그라디언트 오버레이 (깊이감) -->
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:type="linear"
+                android:angle="135"
+                android:startColor="#F5EFE7"
+                android:endColor="#F9F4F0"
+                android:gradientRadius="1000dp" />
+        </shape>
+    </item>
+
+    <!-- 한반도 지도 투명 오버레이 (오른쪽 하단에 배치) -->
+    <!-- 텍스트로 구현되므로 여기서는 공간만 예약 -->
+    <!-- 실제 지도 이모지는 XML의 TextView로 구현됨 -->
+</layer-list>
