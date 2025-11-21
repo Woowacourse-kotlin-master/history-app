@@ -22,6 +22,7 @@ import retrofit2.Response
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var tvPoint: TextView
+    private lateinit var tvMemberName: TextView
     private lateinit var btnProfile: ImageButton
     private lateinit var btnCamera: Button
     private lateinit var btnBackToLogin: Button
@@ -40,6 +41,7 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         tvPoint = findViewById(R.id.tvPoint)
+        tvMemberName = findViewById(R.id.tvMemberName)
         btnProfile = findViewById(R.id.btnProfile)
         btnCamera = findViewById(R.id.btnCamera)
         btnBackToLogin = findViewById(R.id.btnHomeBackLogin)
@@ -59,12 +61,33 @@ class HomeActivity : AppCompatActivity() {
             galleryLauncher.launch("image/*")
         }
 
-        // TODO: onCreate에서 포인트 정보 가져와도 됨 (api/point)
-        loadPoint()
+        loadMemberInfoAndPoint()
     }
 
-    private fun loadPoint() {
+    private fun loadMemberInfoAndPoint() {
         val api = RetrofitClient.getApiService(this)
+
+        // 회원 정보 로드
+        api.getMemberInfo().enqueue(object : Callback<com.balhae.historyapp.network.models.MemberResponse> {
+            override fun onResponse(
+                call: Call<com.balhae.historyapp.network.models.MemberResponse>,
+                response: Response<com.balhae.historyapp.network.models.MemberResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    tvMemberName.text = body?.name ?: "사용자"
+                }
+            }
+
+            override fun onFailure(
+                call: Call<com.balhae.historyapp.network.models.MemberResponse>,
+                t: Throwable
+            ) {
+                tvMemberName.text = "사용자"
+            }
+        })
+
+        // 포인트 로드
         api.getPoint().enqueue(object : Callback<com.balhae.historyapp.network.models.PointResponse> {
             override fun onResponse(
                 call: Call<com.balhae.historyapp.network.models.PointResponse>,

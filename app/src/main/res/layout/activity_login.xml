@@ -78,21 +78,11 @@
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
-            <!-- 임시: 카카오 accessToken 입력 -->
-            <EditText
-                android:id="@+id/etFakeAccessToken"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/bg_edittext_round"
-                android:hint="(테스트용) 카카오 AccessToken 입력"
-                android:padding="12dp" />
-
             <Button
                 android:id="@+id/btnKakaoLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="24dp"
                 android:background="@drawable/bg_kakao_button"
                 android:text="카카오로 시작하기"
                 android:textColor="@android:color/black"
